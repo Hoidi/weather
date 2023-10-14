@@ -20,9 +20,7 @@
 		);
 	};
 
-	const morning = getForecast(Math.max(8, date.getHours() + 2));
-	const dinner = getForecast(17);
-
+	const currentHour = date.getHours() + 2;
 	const updatedTime = forecast.time.toLocaleTimeString().slice(0, -3);
 </script>
 
@@ -36,8 +34,12 @@
 		</div>
 	</div>
 	<div class="weathers">
-		<WeatherBox weather={morning} />
-		<WeatherBox weather={dinner} />
+		{#if currentHour >= 17}
+			<WeatherBox weather={getForecast(currentHour)} />
+		{:else}
+			<WeatherBox weather={getForecast(Math.max(8, currentHour))} />
+			<WeatherBox weather={getForecast(17)} />
+		{/if}
 	</div>
 	<div class="updated">
 		<div class="upatedTime">
