@@ -7,19 +7,23 @@
 </script>
 
 <div class="container">
-	<Forecast forecast={data.smhi} />
+	{#if data.forecasts}
+		<Forecast forecast={data.forecasts} />
+	{:else}
+		Error :(
+	{/if}
 </div>
 
 <style>
 	.container {
-		align-self: center;
-		width: fit-content;
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 
 		display: flex;
-		flex-wrap: wrap;
+		flex-direction: row;
+		justify-content: space-around;
+		gap: 30px;
 	}
 </style>
