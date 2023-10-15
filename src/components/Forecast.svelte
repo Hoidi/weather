@@ -10,13 +10,7 @@
 		return (
 			forecast.forecast.find(
 				(weather) => weather.time.getDate() == date.getDate() && weather.time.getHours() == hour
-			) ||
-			/*forecast.forecast.find(
-				(weather) =>
-					// här händer det galna grejer imorgon ifall idag är sista dagen på månaden
-					weather.time.getDate() == day.getDate() + 1 && weather.time.getHours() == hour
-			) ||*/
-			emptyWeather()
+			) || emptyWeather()
 		);
 	};
 
@@ -62,8 +56,6 @@
 		background-color: lightblue;
 		border-radius: 10px;
 		box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
-		border-color: grey;
-		border-width: 2px;
 		transition: transform 0.2s;
 	}
 
@@ -87,11 +79,13 @@
 	.supplierName {
 		display: inline;
 		font-size: xx-large;
+		text-align: center;
 	}
 
 	.date {
 		display: inline;
 		font-size: large;
+		text-align: center;
 	}
 
 	.weathers {
