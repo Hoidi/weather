@@ -1,7 +1,7 @@
 import type { SmhiPointForecast } from '../api/responseTypes';
 import type { Forecast } from '../types';
 
-export const toForecast = (smhiData: SmhiPointForecast): Forecast => {
+export const smhiToForecast = (smhiData: SmhiPointForecast): Forecast => {
 	return {
 		supplierName: 'SMHI',
 		coordinates: {
