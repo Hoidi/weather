@@ -36,7 +36,7 @@
 		{/if}
 	</div>
 	<div class="updated">
-		<div class="upatedTime">
+		<div class="updatedTime">
 			updated: {updatedTime}
 		</div>
 	</div>
@@ -101,5 +101,7 @@
 
 	.updatedTime {
 		font-weight: lighter;
+		font-size: small;
+		font-family: Verdana, Geneva, Tahoma, sans-serif;
 	}
 </style>
