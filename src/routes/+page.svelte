@@ -1,21 +1,25 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-
-	import Forecast from '../components/Forecast.svelte';
+	import ForecastFlippable from '../components/ForecastFlippable.svelte';
 
 	export let data: PageData;
 </script>
 
 <div class="container">
 	{#if data.forecasts}
-		<Forecast forecast={data.forecasts} />
+		<ForecastFlippable forecast={data.forecasts} />
 	{:else}
 		Error :(
 	{/if}
 </div>
 
 <style>
+	:global(body) {
+		background-color: rgb(57, 67, 74);
+	}
+
 	.container {
+		perspective: 600;
 		position: absolute;
 		top: 50%;
 		left: 50%;
