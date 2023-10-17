@@ -5,6 +5,7 @@
 
 	export let forecast: Forecast;
 	export let date = new Date();
+	export let wholeDay = false;
 
 	const getForecast = (hour: number): Weather => {
 		return (
@@ -16,28 +17,36 @@
 
 	const currentHour = date.getHours() + 2;
 	const updatedTime = forecast.time.toLocaleTimeString().slice(0, -3);
+
+	const wholeDayHours = [6, 9, 12, 15, 18, 21].filter((hour) => hour >= currentHour);
 </script>
 
-<div class="forecast">
-	<div class="title">
-		<div class="supplierName">
-			{forecast.supplierName}
+<div class:flipped={wholeDay}>
+	<div class="forecast">
+		<div class="title">
+			<div class="supplierName">
+				{forecast.supplierName}
+			</div>
+			<div class="date">
+				{date.toLocaleString('sv', { month: 'long', day: 'numeric' })}
+			</div>
 		</div>
-		<div class="date">
-			{date.toLocaleString('sv', { month: 'long', day: 'numeric' })}
+		<div class="weathers" class:wholeDay>
+			{#if wholeDay}
+				{#each wholeDayHours as hour}
+					<WeatherBox compact weather={getForecast(hour)} />
+				{/each}
+			{:else if currentHour >= 17}
+				<WeatherBox weather={getForecast(currentHour)} />
+			{:else}
+				<WeatherBox weather={getForecast(Math.max(8, currentHour))} />
+				<WeatherBox weather={getForecast(17)} />
+			{/if}
 		</div>
-	</div>
-	<div class="weathers">
-		{#if currentHour >= 17}
-			<WeatherBox weather={getForecast(currentHour)} />
-		{:else}
-			<WeatherBox weather={getForecast(Math.max(8, currentHour))} />
-			<WeatherBox weather={getForecast(17)} />
-		{/if}
-	</div>
-	<div class="updated">
-		<div class="updatedTime">
-			updated: {updatedTime}
+		<div class="updated">
+			<div class="updatedTime">
+				updated: {updatedTime}
+			</div>
 		</div>
 	</div>
 </div>
@@ -56,7 +65,7 @@
 		background-color: lightblue;
 		border-radius: 10px;
 		box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
-		transition: transform 0.2s;
+		transition: transform 0.5s;
 	}
 
 	.forecast:hover {
@@ -92,6 +101,14 @@
 		display: flex;
 		flex-direction: column;
 		gap: 40px;
+	}
+
+	.wholeDay {
+		gap: 10px;
+	}
+
+	.flipped {
+		transform: rotateY(180deg);
 	}
 
 	.updated {
