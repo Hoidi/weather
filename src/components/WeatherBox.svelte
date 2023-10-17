@@ -3,6 +3,7 @@
 
 	// logic goes here
 	export let weather: Weather;
+	export let compact = false;
 
 	const getClockEmoji = (time: Date): string => {
 		let d = ~~((time.getHours() % 12) * 2 + time.getMinutes() / 30 + 0.5);
@@ -13,7 +14,7 @@
 	let watch = getClockEmoji(weather.time);
 </script>
 
-<div class="cloud">
+<div class="cloud" class:compact>
 	<div class="box">
 		<div class="watch">{watch}</div>
 		<div class="vl">&nbsp;</div>
@@ -48,6 +49,10 @@
 			radial-gradient(farthest-side, #000 98%, #0000) 0 0/20px 20px round;
 		-webkit-mask: var(--mask);
 		mask: var(--mask);
+	}
+
+	.compact {
+		height: 50px;
 	}
 
 	.vl {
