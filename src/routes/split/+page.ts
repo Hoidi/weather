@@ -23,10 +23,10 @@ const validateAndgetCoords = (url: URL): Coordinates => {
 	let lonNum = parseFloat(lonString);
 
 	if (isNaN(latNum)) {
-		latNum = 57.6801;
+		latNum = 57.6969;
 	}
 	if (isNaN(lonNum)) {
-		lonNum = 11.9967;
+		lonNum = 11.9994;
 	}
 
 	// keep coordinate to 4 decimals, otherwise yr gets angry
