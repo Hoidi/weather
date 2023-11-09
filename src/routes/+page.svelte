@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import ForecastFlippable from '../components/ForecastFlippable.svelte';
+	import WeatherCarousel from '../components/WeatherCarousel.svelte';
 
 	export let data: PageData;
 </script>
 
 <div class="container">
 	{#if data.forecasts}
-		<ForecastFlippable forecast={data.forecasts} />
+		<WeatherCarousel forecast={data.forecasts} />
 	{:else}
 		Error :(
 	{/if}

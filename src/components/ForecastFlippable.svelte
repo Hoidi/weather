@@ -3,7 +3,7 @@
 	import Forecast from './Forecast.svelte';
 
 	export let forecast: ForecastType;
-	export let date = new Date();
+	export let date: Date;
 
 	let flipped = false;
 </script>

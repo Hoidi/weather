@@ -4,7 +4,7 @@
 	import WeatherBox from './WeatherBox.svelte';
 
 	export let forecast: Forecast;
-	export let date = new Date();
+	export let date: Date;
 	export let wholeDay = false;
 
 	const getForecast = (hour: number): Weather => {
@@ -15,10 +15,10 @@
 		);
 	};
 
-	const currentHour = date.getHours() + 2;
+	const startHour = date.getDate() == new Date().getDate() ? date.getHours() + 2 : 8;
 	const updatedTime = forecast.time.toLocaleTimeString().slice(0, -3);
 
-	const wholeDayHours = [6, 9, 12, 15, 18, 21].filter((hour) => hour >= currentHour);
+	const wholeDayHours = [6, 9, 12, 15, 18, 21].filter((hour) => hour >= startHour);
 </script>
 
 <div class:flipped={wholeDay}>
@@ -36,11 +36,11 @@
 				{#each wholeDayHours as hour}
 					<WeatherBox compact weather={getForecast(hour)} />
 				{/each}
-			{:else if currentHour >= 17}
-				<WeatherBox weather={getForecast(currentHour)} />
 			{:else}
-				<WeatherBox weather={getForecast(Math.max(8, currentHour))} />
-				<WeatherBox weather={getForecast(17)} />
+				<WeatherBox weather={getForecast(startHour)} />
+				{#if startHour < 17}
+					<WeatherBox weather={getForecast(17)} />
+				{/if}
 			{/if}
 		</div>
 		<div class="updated">
@@ -65,7 +65,7 @@
 		background-color: lightblue;
 		border-radius: 10px;
 		box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
-		transition: transform 0.5s;
+		transition: transform 0.3s;
 	}
 
 	.forecast:hover {
