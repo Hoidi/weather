@@ -33,10 +33,13 @@ const getAverageWeather = (time: Date, forecasts: Forecast[]): Weather => {
 	const weathers: Weather[] = [];
 
 	forecasts.forEach((forecast) => {
-		const filtered = forecast.forecast.filter((a) => a.time == time);
+		const forecastsForGivenTime = forecast.forecast.filter(
+			(a) => a.time.getTime() == time.getTime()
+		);
 
-		if (filtered.length >= 1) {
-			weathers.push(filtered[0]);
+		if (forecastsForGivenTime.length >= 1) {
+			weathers.push(forecastsForGivenTime[0]);
+			return;
 		}
 	});
 
@@ -55,14 +58,22 @@ const getAverageWeather = (time: Date, forecasts: Forecast[]): Weather => {
 };
 
 const getAllTimes = (forecasts: Forecast[]): Date[] => {
-	const times = new Set<Date>();
+	const allTimes = new Set<number>();
 
-	forecasts.forEach((forecast) => forecast.forecast.forEach((weather) => times.add(weather.time)));
+	forecasts.forEach((forecast) =>
+		forecast.forecast.forEach((weather) => allTimes.add(weather.time.getTime()))
+	);
 
-	return Array.from(times).sort();
+	return Array.from(allTimes)
+		.sort()
+		.map((unix) => new Date(unix));
 };
 
 const getAvg = (list: number[]): number => {
+	if (list.length <= 0) {
+		return -1;
+	}
+
 	return list.reduce((sum, current) => sum + current) / list.length;
 };
 
