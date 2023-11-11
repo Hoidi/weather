@@ -36,7 +36,7 @@
 		transform: translate(-50%, -50%);
 
 		font-size: x-large;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: Roboto, Arial, Helvetica, sans-serif;
 
 		display: flex;
 		justify-content: space-around;

@@ -76,7 +76,7 @@
 		margin-right: auto;
 		margin-left: auto;
 		width: fit-content;
-		font-family: Verdana, Geneva, Tahoma, sans-serif;
+		font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
 		font-weight: lighter;
 		line-height: 100%;
 
