@@ -3,11 +3,11 @@ import { smhiToForecast, yrToForecast } from '../toForecast';
 import type { Coordinates, Forecast, Weather } from '../types';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ url }) => {
+export const load: PageLoad = async ({ fetch, url }) => {
 	const coords: Coordinates = validateAndgetCoords(url);
 
-	const shmiRequest = getSmhiForecast(coords);
-	const yrRequest = getYrForecast(coords);
+	const shmiRequest = getSmhiForecast(coords, fetch);
+	const yrRequest = getYrForecast(coords, fetch);
 
 	return {
 		forecasts: unifyForecasts([smhiToForecast(await shmiRequest), yrToForecast(await yrRequest)])

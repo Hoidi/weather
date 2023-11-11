@@ -3,7 +3,10 @@ import type { YrForecast } from './responseTypes';
 
 const base = 'https://api.met.no/weatherapi/locationforecast/2.0/compact';
 
-export const getYrForecast = async (coordinates: Coordinates): Promise<YrForecast> => {
+export const getYrForecast = async (
+	coordinates: Coordinates,
+	fetch: (input: RequestInfo) => Promise<Response>
+): Promise<YrForecast> => {
 	const requestString = `?lat=${coordinates.latitude}&lon=${coordinates.longitude}`;
 
 	const response = fetch(base + requestString).then((response) => {
