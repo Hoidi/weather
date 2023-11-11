@@ -10,7 +10,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="card" class:flip-it={flipped} on:click={(e) => (flipped = !flipped)}>
+<div class="card" class:flip-it={flipped} on:click={() => (flipped = !flipped)}>
 	<Forecast {forecast} {date} wholeDay={flipped} />
 </div>
 

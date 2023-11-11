@@ -1,21 +1,15 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition';
 	import { hasForecastAtDate, type Forecast } from '../types';
 	import ForecastFlippable from './ForecastFlippable.svelte';
 
 	export let forecast: Forecast;
 	let date = new Date();
 
-	let xDistance = 0;
-	const DISTANCE = 0;
-
 	const previousDate = () => {
 		const yesterdayDate = yesterday(date);
 		if (!hasForecastAtDate(forecast, yesterdayDate)) {
 			return;
 		}
-
-		xDistance = -DISTANCE;
 		date = yesterdayDate;
 	};
 	const nextDate = () => {
@@ -23,7 +17,6 @@
 		if (!hasForecastAtDate(forecast, tomorrowDate)) {
 			return;
 		}
-		xDistance = DISTANCE;
 		date = tomorrowDate;
 	};
 
@@ -59,12 +52,7 @@
 	</div>
 	{#key date}
 		<div class="weather">
-			<!--<div
-				in:fly={{ x: xDistance, duration: 200, delay: 200 }}
-				out:fly={{ x: xDistance, duration: 200 }}
-			>-->
 			<ForecastFlippable {forecast} {date} />
-			<!--</div>-->
 		</div>
 	{/key}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->

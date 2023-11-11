@@ -3,11 +3,11 @@ import { getSmhiForecast, getYrForecast } from '../../api';
 import { smhiToForecast, yrToForecast } from '../../toForecast';
 import type { Coordinates } from '../../types';
 
-export const load: PageLoad = async ({ url }) => {
+export const load: PageLoad = async ({ fetch, url }) => {
 	const coords: Coordinates = validateAndgetCoords(url);
 
-	const shmiReponse = await getSmhiForecast(coords);
-	const yrReponse = await getYrForecast(coords);
+	const shmiReponse = await getSmhiForecast(coords, fetch);
+	const yrReponse = await getYrForecast(coords, fetch);
 
 	return {
 		smhi: smhiToForecast(shmiReponse),
