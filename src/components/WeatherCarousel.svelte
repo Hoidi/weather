@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
-	import type { Forecast } from '../types';
+	import { hasForecastAtDate, type Forecast } from '../types';
 	import ForecastFlippable from './ForecastFlippable.svelte';
 
 	export let forecast: Forecast;
@@ -10,30 +10,47 @@
 	const DISTANCE = 0;
 
 	const previousDate = () => {
-		if (date.getDate() === new Date().getDate()) {
+		const yesterdayDate = yesterday(date);
+		if (!hasForecastAtDate(forecast, yesterdayDate)) {
 			return;
 		}
 
 		xDistance = -DISTANCE;
-
-		date.setDate(date.getDate() - 1);
-		date = date;
+		date = yesterdayDate;
 	};
 	const nextDate = () => {
+		const tomorrowDate = tomorrow(date);
+		if (!hasForecastAtDate(forecast, tomorrowDate)) {
+			return;
+		}
 		xDistance = DISTANCE;
-		date.setDate(date.getDate() + 1);
-		date = date;
+		date = tomorrowDate;
+	};
+
+	const tomorrow = (date: Date): Date => {
+		const tomorrow = new Date(date.getTime());
+		tomorrow.setDate(date.getDate() + 1);
+		return tomorrow;
+	};
+	const yesterday = (date: Date): Date => {
+		const yesterday = new Date(date.getTime());
+		yesterday.setDate(date.getDate() - 1);
+		return yesterday;
 	};
 </script>
 
 <div class="carousel">
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="button left" on:click={previousDate}>
+	<div
+		class="button left"
+		class:buttonHover={hasForecastAtDate(forecast, yesterday(date))}
+		on:click={previousDate}
+	>
 		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M6 12H18M6 12L11 7M6 12L11 17"
-				stroke="#000000"
+				stroke={'#000000' + (hasForecastAtDate(forecast, yesterday(date)) ? 'FF' : '55')}
 				stroke-width="2"
 				stroke-linecap="round"
 				stroke-linejoin="round"
@@ -52,15 +69,21 @@
 	{/key}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="button right" on:click={nextDate}>
+	<div
+		class="button right"
+		class:buttonHover={hasForecastAtDate(forecast, tomorrow(date))}
+		on:click={nextDate}
+	>
 		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path
-				d="M6 12H18M18 12L13 7M18 12L13 17"
-				stroke="#000000"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			/>
+			{#key date}
+				<path
+					d="M6 12H18M18 12L13 7M18 12L13 17"
+					stroke={'#000000' + (hasForecastAtDate(forecast, tomorrow(date)) ? 'FF' : '55')}
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+			{/key}
 		</svg>
 	</div>
 </div>
@@ -90,7 +113,7 @@
 		transition: transform 0.3s;
 	}
 
-	.button:hover {
-		transform: scale(1.1);
+	.buttonHover:hover {
+		transform: scale(1.2);
 	}
 </style>

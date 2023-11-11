@@ -36,3 +36,11 @@ export const emptyWeather = (): Weather => {
 		windDirection: -1
 	};
 };
+
+export const hasForecastAtDate = (forecast: Forecast, date: Date): boolean => {
+	return (
+		forecast.forecast.find(
+			(f) => f.time.getDate() == date.getDate() && f.time.getMonth() == date.getMonth()
+		) != undefined
+	);
+};
