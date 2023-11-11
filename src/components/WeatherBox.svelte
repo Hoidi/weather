@@ -5,18 +5,12 @@
 	export let weather: Weather;
 	export let compact = false;
 
-	const getClockEmoji = (time: Date): string => {
-		let d = ~~((time.getHours() % 12) * 2 + time.getMinutes() / 30 + 0.5);
-		d += d < 2 ? 24 : 0;
-		return String.fromCharCode(55357, 56655 + (d % 2 ? 23 + d : d) / 2);
-	};
-
-	let watch = getClockEmoji(weather.time);
+	let time = weather.time.toLocaleTimeString().slice(0, -3);
 </script>
 
 <div class="cloud" class:compact>
 	<div class="box">
-		<div class="watch">{watch}</div>
+		<div class="time">{time}</div>
 		<div class="vl">&nbsp;</div>
 		<div class="temp">{weather.temperature} °C</div>
 		<div class="vl">&nbsp;</div>
@@ -62,7 +56,7 @@
 		position: relative;
 	}
 
-	.watch {
+	.time {
 		width: fit-content;
 	}
 	.temp {
