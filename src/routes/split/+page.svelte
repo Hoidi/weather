@@ -3,11 +3,13 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+
+	let date = new Date();
 </script>
 
 <div class="container">
-	<Forecast forecast={data.smhi} />
-	<Forecast forecast={data.yr} />
+	<Forecast forecast={data.smhi} {date} />
+	<Forecast forecast={data.yr} {date} />
 </div>
 
 <style>
