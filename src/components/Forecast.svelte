@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { emptyWeather, type Forecast, type Weather } from '../types';
+	import type { Forecast, Weather } from '../types';
 
 	import WeatherBox from './WeatherBox.svelte';
 
@@ -8,11 +8,24 @@
 	export let wholeDay = false;
 
 	const getForecast = (hour: number): Weather => {
-		return (
-			forecast.forecast.find(
-				(weather) => weather.time.getDate() == date.getDate() && weather.time.getHours() == hour
-			) || emptyWeather()
+		const atHour = forecast.forecast.find(
+			(weather) => weather.time.getDate() == date.getDate() && weather.time.getHours() == hour
 		);
+
+		if (atHour) {
+			return atHour;
+		}
+
+		const closest = forecast.forecast
+			.filter((time) => time.time.getDate() == date.getDate())
+			.sort((a, b) => {
+				const timeDifferenceA = Math.abs(a.time.getHours() - hour);
+				const timeDifferenceB = Math.abs(b.time.getHours() - hour);
+
+				return timeDifferenceA - timeDifferenceB;
+			});
+
+		return closest[0];
 	};
 
 	const startHour = date.getDate() == new Date().getDate() ? date.getHours() + 2 : 8;
