@@ -32,6 +32,10 @@
 	const updatedTime = forecast.time.toLocaleTimeString().slice(0, -3);
 
 	const wholeDayHours = [6, 9, 12, 15, 18, 21].filter((hour) => hour >= startHour);
+
+	const wholeDayWeathers = wholeDayHours
+		.map((hour) => getForecast(hour))
+		.filter((value, index, self) => self.indexOf(value) === index);
 </script>
 
 <div class:flipped={wholeDay}>
@@ -46,8 +50,8 @@
 		</div>
 		<div class="weathers" class:wholeDay>
 			{#if wholeDay}
-				{#each wholeDayHours as hour}
-					<WeatherBox compact weather={getForecast(hour)} />
+				{#each wholeDayWeathers as weather}
+					<WeatherBox compact {weather} />
 				{/each}
 			{:else}
 				<WeatherBox weather={getForecast(startHour)} />
