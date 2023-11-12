@@ -69,12 +69,12 @@ const getAllTimes = (forecasts: Forecast[]): Date[] => {
 		.map((unix) => new Date(unix));
 };
 
-const getAvg = (list: number[]): number => {
+const getAvg = (list: number[], precision: number = 1): number => {
 	if (list.length <= 0) {
 		return -1;
 	}
 
-	return list.reduce((sum, current) => sum + current) / list.length;
+	return Number((list.reduce((sum, current) => sum + current) / list.length).toFixed(precision));
 };
 
 const validateAndgetCoords = (url: URL): Coordinates => {
